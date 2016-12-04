@@ -1,38 +1,48 @@
 #!/usr/bin/env python
 import argparse
 import logging
-import time
 import gym
+import sys
 import universe
 from universe import pyprofile, wrappers
 
-from drivers.deepdrive.deep_driver import DeepDriver
+from GameSettingsEvent import GTASetting
+from drivers.deepdrive.deep_driver import DeepDriverBase
 
 
 # if not os.getenv("PYPROFILE_FREQUENCY"):
 #     pyprofile.profile.print_frequency = 5
+from drivers.pt.pt_driver import PTDriverBase
 
 logger = logging.getLogger()
+extra_logger = logging.getLogger('universe')
 
-if __name__ == '__main__':
+stdout_log_handler = logging.StreamHandler(sys.stdout)
+stdout_log_handler.setLevel(logging.DEBUG)
+
+
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+stdout_log_handler.setFormatter(formatter)
+extra_logger.addHandler(stdout_log_handler)
+
+
+def main():
     # You can optionally set up the logger. Also fine to set the level
     # to logging.DEBUG or logging.WARN if you want to change the
     # amount of output.
     logger.setLevel(logging.INFO)
     universe.configure_logging()
 
-    # Actions this agent will take, 'random' is the default
-    action_choices = ['random', 'noop', 'forward']
-
     parser = argparse.ArgumentParser(description=None)
     parser.add_argument('-e', '--env_id', default='gym-core.Pong-v3', help='Which environment to run on.')
-    parser.add_argument('-m', '--monitor', action='store_true', help='Whether to activate the monitor.')
+    parser.add_argument('-m', '--monitor', action='store_false', help='Whether to activate the monitor.')
     parser.add_argument('-r', '--remote', default='http://allocator.sci.openai-tech.com', help='The number of environments to create (e.g. -r 20), or the address of pre-existing VNC servers and rewarders to use (e.g. -r vnc://localhost:5900+15900,localhost:5901+15901), or a query to the allocator (e.g. -r http://allocator.sci.openai-tech.com?n=2)')
     parser.add_argument('-v', '--verbose', action='count', dest='verbosity', default=0, help='Set verbosity.')
     parser.add_argument('-R', '--no-render', action='store_true', help='Do not render the environment locally.')
     parser.add_argument('-f', '--fps', default=60., type=float, help='Desired frames per second')
     parser.add_argument('-N', '--max-steps', type=int, default=10**7, help='Maximum number of steps to take')
     parser.add_argument('-d', '--driver', default='DeepDriver', help='Choose your driver')
+    parser.add_argument('-c', '--custom_camera',  action='store_false', help='Customize the GTA camera')
 
     args = parser.parse_args()
 
@@ -69,14 +79,14 @@ if __name__ == '__main__':
         },
     )
 
-    driver = None
     if args.driver == 'DeepDriver':
-        driver = DeepDriver()
-        driver.setup()
+        driver = DeepDriverBase()
+    elif args.driver == 'pt':
+        driver = PTDriverBase()
     else:
         raise Exception('That driver is not available')
 
-    driver = DeepDriver()
+    # driver = DeepDriver()
     driver.setup()
 
     if args.monitor:
@@ -84,10 +94,8 @@ if __name__ == '__main__':
 
     render = not args.no_render
     observation_n = env.reset()
-    target = time.time()
     reward_n = [0] * env.n
     done_n = [False] * env.n
-    action_n = driver.get_noop()
     info = None
 
     for i in range(args.max_steps):
@@ -104,9 +112,18 @@ if __name__ == '__main__':
 
         action_n = driver.process_step(observation_n, reward_n, done_n, info)
 
+        if args.custom_camera:
+            # Sending this every step is probably overkill
+            for action in action_n:
+                action.append(GTASetting('use_custom_camera', True))
+
         # Take an action
         with pyprofile.push('env.step'):
             observation_n, reward_n, done_n, info = env.step(action_n)
 
     # We're done! clean up
     env.close()
+
+if __name__ == '__main__':
+    sys.exit(main())
+

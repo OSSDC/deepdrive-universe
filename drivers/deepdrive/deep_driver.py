@@ -1,6 +1,6 @@
 import caffe
 import os
-from gtav_driver import GTAVDriver
+from driver_base import DriverBase
 from universe.spaces.joystick_event import JoystickAxisXEvent, JoystickAxisZEvent
 import logging
 logger = logging.getLogger()
@@ -8,9 +8,9 @@ logger = logging.getLogger()
 DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 
 
-class DeepDriver(GTAVDriver):
+class DeepDriverBase(DriverBase):
     def __init__(self):
-        super(DeepDriver, self).__init__()
+        super(DeepDriverBase, self).__init__()
         self.input_layer_name = 'images'
 
     def load_net(self):
@@ -46,7 +46,7 @@ class DeepDriver(GTAVDriver):
                 throttle = self.throttle - (current_speed - desired_speed) * 0.085  # Magic number
                 throttle = max(throttle, 0.0)
             else:
-                throttle += 13. / 50.  # Dead zone
+                throttle += 13. / 50.  # Joystick dead zone
 
             z_axis_event = JoystickAxisZEvent(float(throttle))
             logging.info('throttle %s', throttle)

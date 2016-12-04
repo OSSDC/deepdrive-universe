@@ -1,1 +1,6 @@
-/drivers/696/*
+/drivers/pt/*
+.DS_Store
+.idea/
+*.pyc
+*_log
+drivers/deepdrive/caffe_deep_drive_train_iter_35352.caffemodel
