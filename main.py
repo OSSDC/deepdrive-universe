@@ -12,7 +12,6 @@ from drivers.deepdrive.deep_driver import DeepDriverBase
 
 # if not os.getenv("PYPROFILE_FREQUENCY"):
 #     pyprofile.profile.print_frequency = 5
-from drivers.pt.pt_driver import PTDriverBase
 
 logger = logging.getLogger()
 extra_logger = logging.getLogger('universe')
@@ -82,6 +81,7 @@ def main():
     if args.driver == 'DeepDriver':
         driver = DeepDriverBase()
     elif args.driver == 'pt':
+        from drivers.pt.pt_driver import PTDriverBase
         driver = PTDriverBase()
     else:
         raise Exception('That driver is not available')
