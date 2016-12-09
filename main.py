@@ -41,7 +41,7 @@ def main():
     parser.add_argument('-f', '--fps', default=60., type=float, help='Desired frames per second')
     parser.add_argument('-N', '--max-steps', type=int, default=10**7, help='Maximum number of steps to take')
     parser.add_argument('-d', '--driver', default='DeepDriver', help='Choose your driver')
-    parser.add_argument('-c', '--custom_camera',  action='store_false', help='Customize the GTA camera')
+    parser.add_argument('-c', '--custom_camera',  action='store_true', help='Customize the GTA camera')
 
     args = parser.parse_args()
 
