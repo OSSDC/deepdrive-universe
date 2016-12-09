@@ -53,6 +53,8 @@ def main():
         logger.setLevel(logging.DEBUG)
 
     if args.env_id is not None:
+        # N.B. This does not set the actual environment mode yet, which
+        # is currently driven by environment itself.
         env = gym.make(args.env_id)
     else:
         env = wrappers.WrappedVNCEnv()
