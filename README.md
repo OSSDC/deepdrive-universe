@@ -34,7 +34,7 @@ In addition, enable borderless mode to avoid sending the window chrome through t
 ![borderless](https://www.dropbox.com/s/dci8o6z3129bwpl/borderless.jpg?dl=1)
 
 ## Run the GTAV Universe environment
-Follow the env setup [instructions](https://github.com/openai/universe-windows-envs/blob/master/vnc-gtav/README.md)
+Follow the env setup instructions [here](https://github.com/openai/universe-windows-envs/blob/master/vnc-gtav/README.md)
 
 ## Directly connected machines
 To connect your Windows and Ubuntu machines directly via ethernet, follow [these instructions](http://askubuntu.com/a/26770/158805) for adding the interface to Ubuntu.
