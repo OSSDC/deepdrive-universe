@@ -1,11 +1,11 @@
-Run deepdrive models using Universe.
+# DeepDrive in [Universe](https://universe.openai.com/)
 
-# Setup
+## Setup
 ```
 git clone https://github.com/deepdrive/deep_drivers
 ```
 
-Note: You will need GPU acceleration to do inference at the 8Hz that the model runs. Slower (or faster) inference may work, but is not the standard way to run the model.
+Note: You will need GPU acceleration to do inference at the 8Hz that the model runs. Slower (or faster) inference may work, but is not the standard way the model is run.
 
 ## Baseline model - Tensorflow version
 _Thanks to  [Rafal jozefowicz](https://github.com/rafaljozefowicz) for contributing this model_
@@ -33,8 +33,8 @@ In addition, enable borderless mode to avoid sending the window chrome through t
 
 ![borderless](https://www.dropbox.com/s/dci8o6z3129bwpl/borderless.jpg?dl=1)
 
-## Run the GTAV Universe env
-Follow the instructions [here](https://github.com/openai/universe-windows-envs/blob/master/vnc-gtav/README.md)
+## Run the GTAV Universe environment
+Follow the env setup [instructions](https://github.com/openai/universe-windows-envs/blob/master/vnc-gtav/README.md)
 
 ## Directly connected machines
 To connect your Windows and Ubuntu machines directly via ethernet, follow [these instructions](http://askubuntu.com/a/26770/158805) for adding the interface to Ubuntu.
