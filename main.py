@@ -38,7 +38,7 @@ def main():
     parser.add_argument('-r', '--remote', help='The number of environments to create (e.g. -r 20), or the address of pre-existing VNC servers and rewarders to use (e.g. -r vnc://localhost:5900+15900,localhost:5901+15901), or a query to the allocator (e.g. -r http://allocator.sci.openai-tech.com?n=2)')
     parser.add_argument('-v', '--verbose', action='count', dest='verbosity', default=0, help='Set verbosity.')
     parser.add_argument('-R', '--no-render', action='store_true', help='Do not render the environment locally.')
-    parser.add_argument('-f', '--fps', default=60., type=float, help='Desired frames per second')
+    parser.add_argument('-f', '--fps', default=8., type=float, help='Desired frames per second')
     parser.add_argument('-N', '--max-steps', type=int, default=10**7, help='Maximum number of steps to take')
     parser.add_argument('-d', '--driver', default='DeepDriver', help='Choose your driver')
     parser.add_argument('-c', '--custom_camera',  action='store_true', help='Customize the GTA camera')
