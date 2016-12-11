@@ -10,15 +10,15 @@ Note: You will need GPU acceleration to do inference at the 8Hz that the model r
 ## Baseline model - Tensorflow version
 _Thanks to  [Rafal jozefowicz](https://github.com/rafaljozefowicz) for contributing this model_
 ```
-cd deepdrive-tf
-wget https://www.dropbox.com/s/fsummbpqlfildnq/model.ckpt-20048?dl=1
+cd drivers/deepdrive-tf
+wget -O model.ckpt-20048 https://goo.gl/zanx88
 ```
 
 ## Baseline model - Caffe version
 Install the latest version of Caffe and download the model via
 ```
-cd deepdrive
-wget https://www.dropbox.com/s/z92c4otvyofgl3f/caffe_deep_drive_train_iter_35352.caffemodel?dl=1
+cd drivers/deepdrive
+wget -O caffe_deep_drive_train_iter_35352.caffemodel https://goo.gl/sVAedm
 ```
 
 Baseline models were trained with the standard hood camera in GTAV. 
