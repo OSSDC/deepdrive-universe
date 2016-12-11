@@ -8,9 +8,9 @@ logger = logging.getLogger()
 DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 
 
-class DeepDriverBase(DriverBase):
+class DeepDriver(DriverBase):
     def __init__(self):
-        super(DeepDriverBase, self).__init__()
+        super(DeepDriver, self).__init__()
         self.input_layer_name = 'images'
 
     def load_net(self):

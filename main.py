@@ -7,7 +7,7 @@ import universe
 from universe import pyprofile, wrappers
 
 from GameSettingsEvent import GTASetting
-from drivers.deepdrive.deep_driver import DeepDriverBase
+from drivers.deepdrive.deep_driver import DeepDriver
 
 
 # if not os.getenv("PYPROFILE_FREQUENCY"):
@@ -33,12 +33,12 @@ def main():
     universe.configure_logging()
 
     parser = argparse.ArgumentParser(description=None)
-    parser.add_argument('-e', '--env_id', default='gym-core.Pong-v3', help='Which environment to run on.')
+    parser.add_argument('-e', '--env_id', default='gtav.SaneDriving-v0', help='Which environment to run on.')
     parser.add_argument('-m', '--monitor', action='store_false', help='Whether to activate the monitor.')
     parser.add_argument('-r', '--remote', default='http://allocator.sci.openai-tech.com', help='The number of environments to create (e.g. -r 20), or the address of pre-existing VNC servers and rewarders to use (e.g. -r vnc://localhost:5900+15900,localhost:5901+15901), or a query to the allocator (e.g. -r http://allocator.sci.openai-tech.com?n=2)')
     parser.add_argument('-v', '--verbose', action='count', dest='verbosity', default=0, help='Set verbosity.')
     parser.add_argument('-R', '--no-render', action='store_true', help='Do not render the environment locally.')
-    parser.add_argument('-f', '--fps', default=60., type=float, help='Desired frames per second')
+    parser.add_argument('-f', '--fps', default=8, type=float, help='Desired frames per second')
     parser.add_argument('-N', '--max-steps', type=int, default=10**7, help='Maximum number of steps to take')
     parser.add_argument('-d', '--driver', default='DeepDriver', help='Choose your driver')
     parser.add_argument('-c', '--custom_camera',  action='store_false', help='Customize the GTA camera')
@@ -79,7 +79,7 @@ def main():
     )
 
     if args.driver == 'DeepDriver':
-        driver = DeepDriverBase()
+        driver = DeepDriver()
     elif args.driver == 'pt':
         from drivers.pt.pt_driver import PTDriverBase
         driver = PTDriverBase()
