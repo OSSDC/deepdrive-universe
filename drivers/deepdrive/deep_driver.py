@@ -36,20 +36,20 @@ class DeepDriver(DriverBase):
         elif steer < 0:
             steer -= steer_dead_zone
 
-        logger.info('steer %f', steer)
+        logger.debug('steer %f', steer)
         x_axis_event = JoystickAxisXEvent(steer)
         if 'n' in info and 'speed' in info['n'][0]:
             current_speed = info['n'][0]['speed']
             desired_speed = speed / 0.05  # Denormalize per deep_drive.h in deepdrive-caffe
             if desired_speed < current_speed:
-                logger.info('braking')
+                logger.debug('braking')
                 throttle = self.throttle - (current_speed - desired_speed) * 0.085  # Magic number
                 throttle = max(throttle, 0.0)
             else:
                 throttle += 13. / 50.  # Joystick dead zone
 
             z_axis_event = JoystickAxisZEvent(float(throttle))
-            logging.info('throttle %s', throttle)
+            logging.debug('throttle %s', throttle)
         else:
             z_axis_event = JoystickAxisZEvent(0)
             logging.warn('cannot determine speed of car, coasting')

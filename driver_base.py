@@ -38,20 +38,20 @@ class DriverBase(object):
             begin = time.time()
             self.set_net_input(image)
             end = time.time()
-            print('time to set net input', end - begin)
+            logger.debug('time to set net input %s', end - begin)
             net_out = self.react()
 
             begin = time.time()
             next_action_n = self.get_next_action_n(net_out, info)
             end = time.time()
-            print('time to get next action', end - begin)
+            logger.debug('time to get next action %s', end - begin)
 
 
             errored = [i for i, info_i in enumerate(info['n']) if 'error' in info_i]
             if errored:
-                logger.info('had errored indexes: %s: %s', errored, info)
+                logger.error('had errored indexes: %s: %s', errored, info)
 
-            print('reward', reward_n)
+            logger.debug('reward % s', reward_n)
             # if any(done_n) or any(r != 0.0 and r is not None for r in reward_n):
             #     logger.info('reward_n=%s done_n=%s info=%s', reward_n, done_n, info)
 
@@ -69,5 +69,5 @@ class DriverBase(object):
         begin = time.time()
         net_out = self.net.forward()
         end = time.time()
-        print('inference time', end - begin)
+        logger.debug('inference time %s', end - begin)
         return net_out

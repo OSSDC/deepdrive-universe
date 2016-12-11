@@ -2,7 +2,7 @@
 
 ## Setup
 ```
-git clone https://github.com/deepdrive/deep_drivers
+git clone https://github.com/deepdrive/deepdrive-universe
 ```
 
 Note: You will need GPU acceleration to do inference at the 8Hz that the model runs. Slower (or faster) inference may work, but is not the standard way the model is run.
