@@ -1,6 +1,6 @@
 # DeepDrive in [Universe](https://universe.openai.com/)
 
-## Prerequites
+## Prerequisites
 
 Follow the env setup instructions [here](https://github.com/openai/universe-windows-envs/blob/master/vnc-gtav/README.md)
 
