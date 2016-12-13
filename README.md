@@ -7,19 +7,20 @@ git clone https://github.com/deepdrive/deepdrive-universe
 
 Note: You will need GPU acceleration to do inference at the 8Hz that the model runs. Slower (or faster) inference may work, but is not the standard way the model is run.
 
-## Baseline model - Tensorflow version
-_Thanks to  [Rafal jozefowicz](https://github.com/rafaljozefowicz) for contributing this model_
-```
-cd drivers/deepdrive-tf
-wget -O model.ckpt-20048 https://goo.gl/zanx88
-```
-
 ## Baseline model - Caffe version
 Install the latest version of Caffe and download the model via
 ```
 cd drivers/deepdrive
 wget -O caffe_deep_drive_train_iter_35352.caffemodel https://goo.gl/sVAedm
 ```
+
+## (Coming soon) Baseline model - Tensorflow version
+_Thanks to  [Rafal jozefowicz](https://github.com/rafaljozefowicz) for contributing this model_
+```
+cd drivers/deepdrive-tf
+wget -O model.ckpt-20048 https://goo.gl/zanx88
+```
+
 
 Baseline models were trained with the standard hood camera in GTAV. 
 
