@@ -1,5 +1,9 @@
 # DeepDrive in [Universe](https://universe.openai.com/)
 
+## Prerequites
+
+Follow the env setup instructions [here](https://github.com/openai/universe-windows-envs/blob/master/vnc-gtav/README.md)
+
 ## Setup
 ```
 git clone https://github.com/deepdrive/deepdrive-universe
@@ -33,9 +37,6 @@ If you see the steering wheel, change the camera settings like so:
 In addition, enable borderless mode to avoid sending the window chrome through the network
 
 ![borderless](https://www.dropbox.com/s/dci8o6z3129bwpl/borderless.jpg?dl=1)
-
-## Run the GTAV Universe environment
-Follow the env setup instructions [here](https://github.com/openai/universe-windows-envs/blob/master/vnc-gtav/README.md)
 
 ## Run the model
 ```
