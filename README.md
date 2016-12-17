@@ -44,7 +44,7 @@ In addition, enable borderless mode to avoid sending the window chrome through t
 python main.py -d [DeepDriver|DeepDriverTF] -r vnc://<your-env-ip>:5900+15900
 ```
 
-## Sample returned by the env
+## Sample data returned by the env
 
 ```
 	"body" :
