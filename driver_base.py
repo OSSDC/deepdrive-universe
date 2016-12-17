@@ -37,7 +37,11 @@ class DriverBase(object):
         if observation_n[0] is None:
             return self.get_noop()
         image = observation_n[0]['vision']
-        if image is not None:
+        if image is None:
+            logger.warning('No image received. '
+                           'You may need to restart the environment - Also make sure to leave the RDP session open.')
+            return self.get_noop()
+        else:
             begin = time.time()
             self.set_input(image)
             end = time.time()
@@ -62,8 +66,7 @@ class DriverBase(object):
             #     logger.info('reward_n=%s done_n=%s info=%s', reward_n, done_n, info)
 
             return next_action_n
-        else:
-            return self.get_noop()
+
 
     def get_noop(self):
         x_axis_event = JoystickAxisXEvent(0)

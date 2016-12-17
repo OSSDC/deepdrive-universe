@@ -1,4 +1,7 @@
 import os
+
+import time
+
 from driver_base import DriverBase
 from universe.spaces.joystick_event import JoystickAxisXEvent, JoystickAxisZEvent
 import logging
@@ -52,7 +55,7 @@ class DeepDriver(DriverBase):
             logging.debug('throttle %s', throttle)
         else:
             z_axis_event = JoystickAxisZEvent(0)
-            logging.warn('cannot determine speed of car, coasting')
+            logging.debug('No info received from environment - sending noop')
         next_action_n = [[x_axis_event, z_axis_event]]
 
         self.throttle = throttle
@@ -67,7 +70,7 @@ class DeepDriver(DriverBase):
 
     def get_net_out(self):
         begin = time.time()
-        net_out = self.forward()
+        net_out = self.net.forward()
         end = time.time()
         logger.debug('inference time %s', end - begin)
         return net_out

@@ -44,6 +44,49 @@ In addition, enable borderless mode to avoid sending the window chrome through t
 python main.py -d [DeepDriver|DeepDriverTF] -r vnc://<your-env-ip>:5900+15900
 ```
 
+## Sample returned by the env
+
+```
+	"body" :
+	{
+		"done" : false,
+		"info" :
+		{
+			"center_of_lane_reward" : 0,
+			"distance_from_destination" : 1306.6157153344816,
+			"forward_vector_x" : -0.9870644211769104,
+			"forward_vector_y" : 0.15973846614360809,
+			"forward_vector_z" : 0.013689413666725159,
+			"game_time.day_of_month" : 6,
+			"game_time.hour" : 16,
+			"game_time.minute" : 8,
+			"game_time.month" : 9,
+			"game_time.ms_per_game_min" : 2000,
+			"game_time.second" : 47,
+			"game_time.year" : 2009,
+			"heading" : 80.808067321777344,
+			"is_game_driving" : false,
+			"last_collision_time" : 1481999559,
+			"last_material_collided_with" : "4201905313",
+			"on_road" : true,
+			"script_hook_loadtime" : 1481939095,
+			"speed" : 0,
+			"spin" : 0,
+			"x_coord" : -2372.70068359375,
+			"y_coord" : 1032.6005859375,
+			"z_coord" : 195.53288269042969
+		},
+		"reward" : 0
+	},
+	"headers" :
+	{
+		"episode_id" : "1",
+		"sent_at" : 1481999938.4742091
+	},
+	"method" : "v0.env.reward"
+}
+```
+
 ## Directly connected machines
 To connect your Windows and Ubuntu machines directly via ethernet, follow [these instructions](http://askubuntu.com/a/26770/158805) for adding the interface to Ubuntu.
 
