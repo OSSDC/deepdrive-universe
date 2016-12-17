@@ -121,7 +121,8 @@ def main():
 
         # Take an action
         with pyprofile.push('env.step'):
-            observation_n, reward_n, done_n, info = env.step(action_n)
+            _step = env.step(action_n)
+            observation_n, reward_n, done_n, info = _step
 
     # We're done! clean up
     env.close()

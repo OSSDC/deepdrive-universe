@@ -55,7 +55,7 @@ class DeepDriver(DriverBase):
             logging.debug('throttle %s', throttle)
         else:
             z_axis_event = JoystickAxisZEvent(0)
-            logging.debug('No info received from environment - sending noop')
+            logging.debug('No info received from environment for this frame - sending noop')
         next_action_n = [[x_axis_event, z_axis_event]]
 
         self.throttle = throttle
