@@ -1,5 +1,7 @@
 # DeepDrive in [Universe](https://universe.openai.com/)
 
+_Pretrained self-driving car models that run in GTAV via Universe_
+
 ## Prerequisites
 
 Follow the env setup instructions [here](https://github.com/openai/universe-windows-envs/blob/master/vnc-gtav/README.md)
