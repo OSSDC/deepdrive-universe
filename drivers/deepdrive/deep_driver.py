@@ -1,4 +1,3 @@
-import caffe
 import os
 from driver_base import DriverBase
 from universe.spaces.joystick_event import JoystickAxisXEvent, JoystickAxisZEvent
@@ -14,6 +13,7 @@ class DeepDriver(DriverBase):
         self.input_layer_name = 'images'
 
     def load_net(self):
+            import caffe  # Don't require caffe unless this driver is used
             caffe.set_mode_gpu()
             model_def = os.path.join(DIR_PATH, 'deep_drive_model.prototxt')
             model_weights = os.path.join(DIR_PATH, 'caffe_deep_drive_train_iter_35352.caffemodel')
@@ -25,7 +25,7 @@ class DeepDriver(DriverBase):
             transformer.set_channel_swap('data', (2, 1, 0))  # swap channels from RGB to BGR
             self.image_transformer = transformer
 
-    def get_next_action_n(self, net_out, info):
+    def get_next_action(self, net_out, info):
         spin, direction, speed, speed_change, steer, throttle = net_out['gtanet_fctop'][0]
         steer = -float(steer)
         steer_dead_zone = 0.2
@@ -60,7 +60,14 @@ class DeepDriver(DriverBase):
 
         return next_action_n
 
-    def set_net_input(self, image):
+    def set_input(self, image):
         # print(image)
         transformed_image = self.image_transformer.preprocess('data', image)
         self.net.blobs[self.input_layer_name].data[...] = transformed_image
+
+    def get_net_out(self):
+        begin = time.time()
+        net_out = self.forward()
+        end = time.time()
+        logger.debug('inference time %s', end - begin)
+        return net_out

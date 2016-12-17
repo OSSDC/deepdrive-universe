@@ -12,6 +12,7 @@ from drivers.deepdrive.deep_driver import DeepDriver
 
 # if not os.getenv("PYPROFILE_FREQUENCY"):
 #     pyprofile.profile.print_frequency = 5
+from drivers.deepdrive_tf.deep_driver_tf import DeepDriverTF
 
 logger = logging.getLogger()
 extra_logger = logging.getLogger('universe')
@@ -82,9 +83,8 @@ def main():
 
     if args.driver == 'DeepDriver':
         driver = DeepDriver()
-    elif args.driver == 'pt':
-        from drivers.pt.pt_driver import PTDriverBase
-        driver = PTDriverBase()
+    elif args.driver == 'DeepDriverTF':
+        driver = DeepDriverTF()
     else:
         raise Exception('That driver is not available')
 
@@ -112,7 +112,7 @@ def main():
             # duration of the reset.
             env.render()
 
-        action_n = driver.process_step(observation_n, reward_n, done_n, info)
+        action_n = driver.step(observation_n, reward_n, done_n, info)
 
         if args.custom_camera:
             # Sending this every step is probably overkill

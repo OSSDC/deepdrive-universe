@@ -23,6 +23,7 @@ _Thanks to  [Rafal jozefowicz](https://github.com/rafaljozefowicz) for contribut
 ```
 cd drivers/deepdrive-tf
 wget -O model.ckpt-20048 https://goo.gl/zanx88
+wget -O model.ckpt-20048.meta https://goo.gl/LNqHoj
 ```
 
 
