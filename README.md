@@ -1,6 +1,6 @@
 # DeepDrive in [Universe](https://universe.openai.com/)
 
-_Pretrained self-driving car models that run in GTAV via Universe_
+_Pretrained self-driving car models that run in GTAV / Universe_
 
 ## Prerequisites
 
