@@ -37,7 +37,7 @@ To enable the hood camera, hit <kbd>v</kbd> until you see something like this
 If you see the steering wheel, change the camera settings like so:
 ![deepdrive load](https://www.dropbox.com/s/h3xu98jz45bafld/Screenshot%202016-10-30%2014.28.42.png?dl=1)
 
-In addition, enable borderless mode to avoid sending the window chrome through the network
+In addition, set the resolution to 800x600 and enable borderless mode to avoid sending the window chrome through the network
 
 ![borderless](https://www.dropbox.com/s/dci8o6z3129bwpl/borderless.jpg?dl=1)
 
