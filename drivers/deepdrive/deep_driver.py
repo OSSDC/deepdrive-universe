@@ -40,6 +40,8 @@ class DeepDriver(DriverBase):
             steer -= steer_dead_zone
 
         logger.debug('steer %f', steer)
+        print('control')
+        print(' steer %f' % steer)
         x_axis_event = JoystickAxisXEvent(steer)
         if 'n' in info and 'speed' in info['n'][0]:
             current_speed = info['n'][0]['speed']
@@ -48,8 +50,12 @@ class DeepDriver(DriverBase):
                 logger.debug('braking')
                 throttle = self.throttle - (current_speed - desired_speed) * 0.085  # Magic number
                 throttle = max(throttle, 0.0)
+                print(' throttle %s' % throttle)
+                print(' braking: true')
             else:
                 throttle += 13. / 50.  # Joystick dead zone
+                print(' throttle %s' % throttle)
+                print(' braking false')
 
             z_axis_event = JoystickAxisZEvent(float(throttle))
             logging.debug('throttle %s', throttle)

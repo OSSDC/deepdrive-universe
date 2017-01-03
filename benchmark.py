@@ -1,5 +1,8 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import argparse
+import collections
+import json
 import logging
 import gym
 import sys
@@ -18,7 +21,7 @@ logger = logging.getLogger()
 extra_logger = logging.getLogger('universe')
 
 stdout_log_handler = logging.StreamHandler(sys.stdout)
-stdout_log_handler.setLevel(logging.DEBUG)
+stdout_log_handler.setLevel(logging.ERROR)
 
 
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -60,7 +63,7 @@ def main():
     else:
         env = wrappers.WrappedVNCEnv()
     if not isinstance(env, wrappers.GymCoreAction):
-        # The GymCoreSyncEnv's try to mimic their core counterparts,
+        # Theopenai GymCoreSyncEnv's try to mimic their core counterparts,
         # and thus came pre-wrapped wth an action space
         # translator. Everything else probably wants a SafeActionSpace
         # wrapper to shield them from random-agent clicking around
@@ -114,10 +117,10 @@ def main():
 
         action_n = driver.step(observation_n, reward_n, done_n, info)
 
-        logger.info('reward %s', reward_n)
+        logger.debug('reward %s', reward_n)
         # logger.info('info %s', info)
         try:
-            logger.info('distance %s', info['n'][0]['distance_from_destination'])
+            logger.debug('distance %s', info['n'][0]['distance_from_destination'])
         except Exception as e:
             logger.warn('distance not available %s', str(e))
 
@@ -130,6 +133,43 @@ def main():
         with pyprofile.push('env.step'):
             _step = env.step(action_n)
             observation_n, reward_n, done_n, info = _step
+            # if reward_n[0] != 0:
+            #     print('reward', reward_n[0])
+            od = collections.OrderedDict(sorted(info['n'][0].items()))
+            try:
+                print()
+                print('info')
+                print(' distance_from_destination', od['distance_from_destination'])
+                print(' speed', od['speed'])
+                print(' on_road', od['on_road'])
+                print(' heading', od['heading'])
+                print(' lateral_velocity', od['velocity_x'])
+                print(' vertical_velocity', od['velocity_z'])
+                print(' pitch_velocity', od['spin_x'])
+                print(' roll_velocity', od['spin_y'])
+                print(' yaw_velocity', od['spin_z'])
+                print(' time_since_drove_against_traffic', od['time_since_drove_against_traffic'])
+                print(' last_collision_time', od['last_collision_time'])
+                print(' last_material_collided_with', od['last_material_collided_with'])
+                print(' stats.vnc.updates.bytes', od['stats.vnc.updates.bytes'])
+                print(' stats.vnc.updates.n', od['stats.vnc.updates.n'])
+                print(' stats.vnc.updates.pixels', od['stats.vnc.updates.pixels'])
+                print(' stats.vnc.updates.rectangles', od['stats.vnc.updates.rectangles'])
+                print()
+                print()
+                print()
+                print()
+                print()
+                print()
+                print()
+                print()
+                print()
+                print()
+                print()
+                print()
+                print()
+            except KeyError:
+                pass
 
     # We're done! clean up
     env.close()
