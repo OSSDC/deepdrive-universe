@@ -28,8 +28,8 @@ def conv2d(x, name, num_features, kernel_size, stride, group):
 def linear(x, name, size):
     input_size = np.prod(list(map(int, x.get_shape()[1:])))
     x = tf.reshape(x, [-1, input_size])
-    w = tf.get_variable(name + "_W", [input_size, size], initializer=tf.random_normal_initializer(0.0, 0.005))
-    b = tf.get_variable(name + "_b", [size], initializer=tf.zeros_initializer)
+    w = tf.get_variable(name + "_W", [input_size, size])
+    b = tf.get_variable(name + "_b", [size])
     return tf.matmul(x, w) + b
 
 def max_pool_2x2(x):

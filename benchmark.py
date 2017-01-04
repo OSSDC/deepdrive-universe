@@ -148,7 +148,7 @@ def main():
                 print(' pitch_velocity', od['spin_x'])
                 print(' roll_velocity', od['spin_y'])
                 print(' yaw_velocity', od['spin_z'])
-                print(' time_since_drove_against_traffic', od['time_since_drove_against_traffic'])
+                print(' secs_since_drove_against_traffic', od['time_since_drove_against_traffic'])
                 print(' last_collision_time', od['last_collision_time'])
                 print(' last_material_collided_with', od['last_material_collided_with'])
                 print(' stats.vnc.updates.bytes', od['stats.vnc.updates.bytes'])

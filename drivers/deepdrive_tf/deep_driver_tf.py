@@ -1,3 +1,4 @@
+from __future__ import print_function
 import time
 
 from driver_base import DriverBase
@@ -5,7 +6,6 @@ from universe.spaces.joystick_event import JoystickAxisXEvent, JoystickAxisZEven
 import logging
 import numpy as np
 from scipy.misc import imresize
-
 
 logger = logging.getLogger()
 
@@ -27,16 +27,21 @@ class DeepDriverTF(DriverBase):
         self.image = None
         self.num_targets = 6
         self.mean_pixel = np.array([104., 117., 123.], np.float32)
+        self.min_outputs = np.array([10., 10., 10., 10., 10., 10.])
+        self.max_outputs = np.array([-10., -10., -10., -10., -10., -10.])
 
     def load_net(self):
-        self.sess = tf.Session()
         saver = tf.train.import_meta_graph(os.path.join(DIR_PATH, 'model.ckpt-20048.meta'))
+        self.sess = tf.Session()
+
+        # self.image_var = tf.placeholder(tf.float32, (None,) + self.image_shape)
+        # self.net_out_var = tf.placeholder(tf.float32, (None, self.num_targets))
+        # self.sess.run(tf.initialize_all_variables())
+
         saver.restore(self.sess, os.path.join(DIR_PATH, 'model.ckpt-20048'))
-        self.image_var = tf.placeholder(tf.float32, (None,) + self.image_shape)
-        self.net_out_var = tf.placeholder(tf.float32, (None, self.num_targets))
-        self.net = GTANetModel(self.image_var, is_training=False)
-        init = tf.initialize_all_variables()
-        self.sess.run(init)
+        pass
+
+        # self.net = GTANetModel(self.image_var, is_training=False)
 
     def get_next_action(self, net_out, info):
         spin, direction, speed, speed_change, steer, throttle = net_out[0]
@@ -46,6 +51,11 @@ class DeepDriverTF(DriverBase):
         # throttle = -float(throttle)
         # speed += 1.0
         steer_dead_zone = 0.2
+        self.max_outputs = np.max(np.array([self.max_outputs, net_out[0]]).T, axis=1)
+        self.min_outputs = np.min(np.array([self.min_outputs, net_out[0]]).T, axis=1)
+
+        print('max outputs', self.max_outputs)
+        print('min outputs', self.min_outputs)
 
         # Add dead zones
         if steer > 0:
@@ -80,14 +90,14 @@ class DeepDriverTF(DriverBase):
 
     def set_input(self, img):
         img = imresize(img, self.image_shape)
-        img = img.astype(np.float32, copy=False)
+        img = img.astype(np.float32)
         img -= self.mean_pixel
         self.image = img
 
     def get_net_out(self):
         begin = time.time()
-        net_out = self.sess.run(self.net.p, feed_dict={self.image_var: self.image.reshape(1, 227, 227, 3)})
-        # print(net_out)
+        net_out = self.sess.run('model/add_5:0', feed_dict={'Placeholder:0': self.image.reshape(1, 227, 227, 3)})
+        print(net_out)
         end = time.time()
         logger.debug('inference time %s', end - begin)
         return net_out

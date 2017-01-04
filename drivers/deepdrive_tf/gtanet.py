@@ -16,13 +16,13 @@ class GTANetModel(object):
         conv5 = tf.nn.relu(conv2d(conv4, "conv5", 256, 3, 1, 2))
         maxpool5 = max_pool_2x2(conv5)
         fc6 = tf.nn.relu(linear(maxpool5, "fc6", 4096))
-        if is_training:
-            fc6 = tf.nn.dropout(fc6, 0.5)
+        # if is_training:
+        #     fc6 = tf.nn.dropout(fc6, 0.5)
         fc7 = tf.nn.relu(linear(fc6, "fc7", 4096))
-        if is_training:
-            fc7 = tf.nn.dropout(fc7, 0.95)
+        # if is_training:
+        #     fc7 = tf.nn.dropout(fc7, 0.95)
         fc8 = linear(fc7, "fc8", num_targets)
 
-        self.p = fc8
+        self.fc8 = fc8
         self.global_step = tf.get_variable("global_step", [], tf.int32, initializer=tf.zeros_initializer,
                                            trainable=False)
