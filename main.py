@@ -8,10 +8,6 @@ from universe import pyprofile, wrappers
 
 from GameSettingsEvent import GTASetting
 from drivers.deepdrive.deep_driver import DeepDriver
-
-
-# if not os.getenv("PYPROFILE_FREQUENCY"):
-#     pyprofile.profile.print_frequency = 5
 from drivers.deepdrive_tf.deep_driver_tf import DeepDriverTF
 
 logger = logging.getLogger()
@@ -19,7 +15,6 @@ extra_logger = logging.getLogger('universe')
 
 stdout_log_handler = logging.StreamHandler(sys.stdout)
 stdout_log_handler.setLevel(logging.DEBUG)
-
 
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 stdout_log_handler.setFormatter(formatter)
@@ -88,7 +83,6 @@ def main():
     else:
         raise Exception('That driver is not available')
 
-    # driver = DeepDriver()
     driver.setup()
 
     if args.monitor:
@@ -101,9 +95,6 @@ def main():
     info = None
 
     for i in range(args.max_steps):
-        # print(observation_n)
-        # user_input.handle_events()
-
         if render:
             # Note the first time you call render, it'll be relatively
             # slow and you'll have some aggregated rewards. We could
@@ -114,12 +105,10 @@ def main():
 
         action_n = driver.step(observation_n, reward_n, done_n, info)
 
-        logger.info('reward %s', reward_n)
-        # logger.info('info %s', info)
         try:
-            logger.info('distance %s', info['n'][0]['distance_from_destination'])
+            logger.debug('distance %s', info['n'][0]['distance_from_destination'])
         except Exception as e:
-            logger.warn('distance not available %s', str(e))
+            logger.warning('distance not available %s', str(e))
 
         if args.custom_camera:
             # Sending this every step is probably overkill

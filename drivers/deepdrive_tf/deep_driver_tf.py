@@ -31,49 +31,40 @@ class DeepDriverTF(DriverBase):
         self.max_outputs = np.array([-10., -10., -10., -10., -10., -10.])
 
     def load_net(self):
-        saver = tf.train.import_meta_graph(os.path.join(DIR_PATH, 'model.ckpt-20048.meta'))
+        self.image_var = tf.placeholder(tf.float32, (None,) + self.image_shape)
+        with tf.variable_scope("model") as vs:
+            self.net = GTANetModel(self.image_var, 6, is_training=False)
+        saver = tf.train.Saver()
         self.sess = tf.Session()
-
-        # self.image_var = tf.placeholder(tf.float32, (None,) + self.image_shape)
-        # self.net_out_var = tf.placeholder(tf.float32, (None, self.num_targets))
-        # self.sess.run(tf.initialize_all_variables())
-
         saver.restore(self.sess, os.path.join(DIR_PATH, 'model.ckpt-20048'))
-        pass
-
-        # self.net = GTANetModel(self.image_var, is_training=False)
 
     def get_next_action(self, net_out, info):
         spin, direction, speed, speed_change, steer, throttle = net_out[0]
         steer = -float(steer)
-        steer -= 0.20
-        print(steer)
-        # throttle = -float(throttle)
-        # speed += 1.0
-        steer_dead_zone = 0.2
-        self.max_outputs = np.max(np.array([self.max_outputs, net_out[0]]).T, axis=1)
-        self.min_outputs = np.min(np.array([self.min_outputs, net_out[0]]).T, axis=1)
-
-        print('max outputs', self.max_outputs)
-        print('min outputs', self.min_outputs)
 
         # Add dead zones
         if steer > 0:
-            steer += steer_dead_zone
+            steer += 0.2
         elif steer < 0:
-            steer -= steer_dead_zone
+            steer -= 0.3
 
         logger.debug('steer %f', steer)
+        print('control tf')
+        print(' steer %f' % steer)
         x_axis_event = JoystickAxisXEvent(steer)
         if 'n' in info and 'speed' in info['n'][0]:
             current_speed = info['n'][0]['speed']
-            desired_speed = speed * 20.  # Denormalize per deep_drive.h in deepdrive-caffe
+            desired_speed = speed / 0.05  # Denormalize per deep_drive.h in deepdrive-caffe
             if desired_speed < current_speed:
                 logger.debug('braking')
                 throttle = self.throttle - (current_speed - desired_speed) * 0.085  # Magic number
                 throttle = max(throttle, 0.0)
+                print(' throttle %s' % throttle)
+                print(' braking: true')
             else:
                 throttle += 13. / 50.  # Joystick dead zone
+                print(' throttle %s' % throttle)
+                print(' braking false')
 
             z_axis_event = JoystickAxisZEvent(float(throttle))
             logging.debug('throttle %s', throttle)
@@ -85,8 +76,7 @@ class DeepDriverTF(DriverBase):
         self.throttle = throttle
         self.steer = steer
 
-        # return self.get_net_out()
-        return self.get_noop()
+        return next_action_n
 
     def set_input(self, img):
         img = imresize(img, self.image_shape)
@@ -96,8 +86,8 @@ class DeepDriverTF(DriverBase):
 
     def get_net_out(self):
         begin = time.time()
-        net_out = self.sess.run('model/add_5:0', feed_dict={'Placeholder:0': self.image.reshape(1, 227, 227, 3)})
-        print(net_out)
+        net_out = self.sess.run(self.net.p, feed_dict={self.image_var: self.image.reshape(1, 227, 227, 3)})
+        # print(net_out)
         end = time.time()
         logger.debug('inference time %s', end - begin)
         return net_out
