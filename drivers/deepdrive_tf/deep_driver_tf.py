@@ -46,7 +46,7 @@ class DeepDriverTF(DriverBase):
         if steer > 0:
             steer += 0.2
         elif steer < 0:
-            steer -= 0.3
+            steer -= 0.4
 
         logger.debug('steer %f', steer)
         print('control tf')
@@ -62,7 +62,7 @@ class DeepDriverTF(DriverBase):
                 print(' throttle %s' % throttle)
                 print(' braking: true')
             else:
-                throttle += 13. / 50.  # Joystick dead zone
+                throttle += 0.4  # Joystick dead zone
                 print(' throttle %s' % throttle)
                 print(' braking false')
 

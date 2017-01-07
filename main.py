@@ -106,9 +106,11 @@ def main():
         action_n = driver.step(observation_n, reward_n, done_n, info)
 
         try:
-            logger.debug('distance %s', info['n'][0]['distance_from_destination'])
-        except Exception as e:
-            logger.warning('distance not available %s', str(e))
+            if info is not None:
+                distance = info['n'][0]['distance_from_destination']
+                logger.info('distance %s', distance)
+        except KeyError as e:
+            logger.debug('distance not available %s', str(e))
 
         if args.custom_camera:
             # Sending this every step is probably overkill
@@ -119,6 +121,11 @@ def main():
         with pyprofile.push('env.step'):
             _step = env.step(action_n)
             observation_n, reward_n, done_n, info = _step
+
+        if any(done_n):
+            print('done_n', done_n, 'i', i)
+            logger.info('end of episode')
+            env.reset()
 
     # We're done! clean up
     env.close()

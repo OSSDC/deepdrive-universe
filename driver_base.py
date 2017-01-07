@@ -61,9 +61,8 @@ class DriverBase(object):
             if errored:
                 logger.error('had errored indexes: %s: %s', errored, info)
 
-            logger.debug('reward % s', reward_n)
-            # if any(done_n) or any(r != 0.0 and r is not None for r in reward_n):
-            #     logger.info('reward_n=%s done_n=%s info=%s', reward_n, done_n, info)
+            if any(r != 0.0 and r is not None for r in reward_n):
+                print('reward', reward_n[0])
 
             return next_action_n
 
