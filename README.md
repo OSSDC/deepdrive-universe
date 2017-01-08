@@ -20,8 +20,8 @@ cd drivers/deepdrive
 wget -O caffe_deep_drive_train_iter_35352.caffemodel https://goo.gl/sVAedm
 ```
 
-### (Coming soon) Baseline model - Tensorflow version
-_Thanks to  [Rafal jozefowicz](https://github.com/rafaljozefowicz) for contributing this model_
+### (Work in progress) Baseline model - Tensorflow version
+_Thanks to  [Rafal jozefowicz](https://github.com/rafaljozefowicz) for helping train this model_
 ```
 cd drivers/deepdrive_tf
 wget -O model.ckpt-20048 https://goo.gl/zanx88
