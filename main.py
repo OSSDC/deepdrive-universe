@@ -122,7 +122,7 @@ def main():
             _step = env.step(action_n)
             observation_n, reward_n, done_n, info = _step
 
-        if any(done_n):
+        if any(done_n) and info and not any(info_n.get('env_status.artificial.done', False) for info_n in info['n']):
             print('done_n', done_n, 'i', i)
             logger.info('end of episode')
             env.reset()
