@@ -87,7 +87,7 @@ def main():
 
     if args.monitor:
         # env.monitor.start('/tmp/vnc_random_agent', force=True, video_callable=lambda i: True)
-        wrappers.Monitor('/tmp/vnc_random_agent',video_callable=True,force=True)
+        wrappers.Monitor(env, '/tmp/vnc_random_agent', video_callable=False, force=True)
          
     render = not args.no_render
     observation_n = env.reset()
