@@ -1,3 +1,4 @@
+from __future__ import division
 import numpy as np
 import tensorflow as tf
 
@@ -21,7 +22,7 @@ def conv(input, kernel, biases, k_h, k_w, c_o, s_h, s_w, padding="VALID", group=
 
 def conv2d(x, name, num_features, kernel_size, stride, group):
     input_features = x.get_shape()[3]
-    w = tf.get_variable(name + "_W", [kernel_size, kernel_size, input_features // group, num_features])
+    w = tf.get_variable(name + "_W", [kernel_size, kernel_size, int(input_features) // group, num_features])
     b = tf.get_variable(name + "_b", [num_features])
     return conv(x, w, b, kernel_size, kernel_size, num_features, stride, stride, padding="SAME", group=group)
 

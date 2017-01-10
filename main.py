@@ -86,8 +86,9 @@ def main():
     driver.setup()
 
     if args.monitor:
-        env.monitor.start('/tmp/vnc_random_agent', force=True, video_callable=lambda i: True)
-
+        # env.monitor.start('/tmp/vnc_random_agent', force=True, video_callable=lambda i: True)
+        wrappers.Monitor('/tmp/vnc_random_agent',video_callable=True,force=True)
+         
     render = not args.no_render
     observation_n = env.reset()
     reward_n = [0] * env.n
