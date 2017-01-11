@@ -126,7 +126,7 @@ Matthew O'Kelly
 Mike Roberts
 Paul Baumgart
 Pieter Abbeel 
-Rafal Jozefowicz
+Rafał Józefowicz
 Tom Brown
 Vicki Cheung
 ```
