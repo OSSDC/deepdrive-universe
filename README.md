@@ -111,7 +111,7 @@ Dan Van Boxel
 Dario Amodei
 Felipe Code
 Greg Brockman
-Gustavo Younberg
+Gustavo Youngberg
 Ilya Sutskever
 Jack Clark
 James Denney
