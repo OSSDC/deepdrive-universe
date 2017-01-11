@@ -97,7 +97,7 @@ Use the _Netmask_ provided by `ipconfig` in Windows for your ethernet interface.
 
 ## Contributors
 
-Several people, without which, DeepDrive would not have been possible
+Several people, without which, this project would not have been possible
 ```
 Aitor Ruano
 Alec Radford
