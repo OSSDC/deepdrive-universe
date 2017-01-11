@@ -94,3 +94,39 @@ python main.py -d [DeepDriver|DeepDriverTF] -r vnc://<your-env-ip>:5900+15900
 To connect your Windows and Ubuntu machines directly via ethernet, follow [these instructions](http://askubuntu.com/a/26770/158805) for adding the interface to Ubuntu.
 
 Use the _Netmask_ provided by `ipconfig` in Windows for your ethernet interface.
+
+## Contributors
+
+Several people, without which, DeepDrive as it is today would not have been possible
+```
+Aitor Ruano
+Alec Radford
+Alex Ray
+Andrej Karpathy
+Andrew Gray
+Brad Templeton
+Catherine Olsson
+Christina Araiza
+Dan Van Boxel
+Dario Amodei
+Felipe Code
+Greg Brockman
+Gustavo Younberg
+Ilya Sutskever
+Jack Clark
+James Denney
+Jeremy Schlatter
+Jon Gautier
+Jonas Schneider
+Krystian Gebis
+Lance Martin
+Ludwig Pettersson
+Matthew Kleinsmith
+Matthew O'Kelly
+Mike Roberts
+Paul Baumgart
+Pieter Abbeel 
+Rafal Jozefowicz
+Tom Brown
+Vicki Cheung
+```
